@@ -24,7 +24,9 @@ frontend/.env.local
 backend/vector_store/
 vector_store/
 
-
+# Data files
+data/
+*.pdf
 
 # IDE
 .vscode/
