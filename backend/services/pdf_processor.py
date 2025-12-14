@@ -170,8 +170,8 @@ class PDFProcessor:
                                 df.columns = headers
                         
                         # Clean up the table data
-                        df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-                        df = df.applymap(lambda x: None if x == "" else x)
+                        df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
+                        df = df.map(lambda x: None if x == "" else x)
                         
                         # Convert to string format
                         table_str = df.to_string(index=False, na_rep="")

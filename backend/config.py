@@ -4,8 +4,12 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    # Google API configuration
-    google_api_key: str = os.getenv("GOOGLE_API_KEY", "")
+    # DeepSeek API configuration (for LLM only)
+    deepseek_api_key: str = os.getenv("DEEPSEEK_API_KEY", "")
+    deepseek_base_url: str = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+    
+    # Ollama configuration (for embeddings - runs locally)
+    ollama_base_url: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
     
     # Vector database configuration
     vector_db_path: str = os.getenv("VECTOR_DB_PATH", "./vector_store")
@@ -14,11 +18,11 @@ class Settings(BaseSettings):
     # PDF upload path
     pdf_upload_path: str = os.getenv("PDF_UPLOAD_PATH", "../data")
     
-    # Embedding model configuration
-    embedding_model: str = os.getenv("EMBEDDING_MODEL", "models/text-embedding-004")
+    # Embedding model configuration (Ollama with DeepSeek model)
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "deepseek-r1:1.5b")
     
-    # LLM configuration
-    llm_model: str = os.getenv("LLM_MODEL", "gemini-2.5-flash")
+    # LLM configuration (DeepSeek API)
+    llm_model: str = os.getenv("LLM_MODEL", "deepseek-chat")
     llm_temperature: float = float(os.getenv("LLM_TEMPERATURE", "0.1"))
     max_tokens: int = int(os.getenv("MAX_TOKENS", "1000"))
     

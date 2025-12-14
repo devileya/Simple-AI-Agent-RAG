@@ -1,8 +1,8 @@
 from typing import List, Tuple, Optional
 import os
 from langchain.schema import Document
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_community.embeddings import OllamaEmbeddings
+from langchain_community.vectorstores import Chroma
 from chromadb.config import Settings as ChromaSettings
 from config import settings
 import logging
@@ -12,9 +12,10 @@ logger = logging.getLogger(__name__)
 
 class VectorStoreService:
     def __init__(self):
-        self.embedding_function = GoogleGenerativeAIEmbeddings(
-            google_api_key=settings.google_api_key,
-            model=settings.embedding_model
+        # Use Ollama with DeepSeek model for embeddings (runs locally, free!)
+        self.embedding_function = OllamaEmbeddings(
+            model=settings.embedding_model,
+            base_url=settings.ollama_base_url
         )
         
         # Create vector store directory if it doesn't exist

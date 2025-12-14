@@ -1,5 +1,13 @@
 # AI Agent for Financial Statement Analysis
 
+> **Note:** This project uses:
+> - **Ollama** (local, FREE) for embeddings with DeepSeek model
+> - **DeepSeek API** (paid but cheap) for LLM/chat
+> 
+> **Requirements:**
+> - Install [Ollama](https://ollama.com) on your machine
+> - DeepSeek API key from [DeepSeek Platform](https://platform.deepseek.com)
+
 ## Project Structure
 
 ```
@@ -44,14 +52,44 @@ git clone <your-repository-url>
 cd demo_rag
 ```
 
-### 2. **Backend Setup**
+### 2. **Install Ollama (for local embeddings)**
+
+**Quick Setup (Automated):**
+```bash
+# Run the setup script (recommended)
+./setup_ollama.sh
+```
+
+**Manual Setup:**
+```bash
+# Install Ollama from https://ollama.com
+# For macOS:
+brew install ollama
+
+# For Linux:
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Start Ollama service
+ollama serve
+
+# In a new terminal, pull DeepSeek model for embeddings
+ollama pull deepseek-r1:1.5b
+```
+
+📖 For detailed Ollama setup, see [OLLAMA_SETUP.md](OLLAMA_SETUP.md)
+
+### 3. **Backend Setup**
 ```bash
 cd backend
 
 # Set up environment variables (create .env file)
-OPENAI_API_KEY=your_openai_api_key
+DEEPSEEK_API_KEY=your_deepseek_api_key
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+OLLAMA_BASE_URL=http://localhost:11434
 VECTOR_DB_PATH=./vector_store
 PDF_UPLOAD_PATH=../data
+EMBEDDING_MODEL=deepseek-r1:1.5b
+LLM_MODEL=deepseek-chat
 
 # Set up Python virtual environment (recommended)
 python -m venv venv
@@ -64,7 +102,7 @@ pip install -r requirements.txt
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 3. **Frontend Setup**
+### 4. **Frontend Setup**
 ```bash
 cd frontend
 
@@ -80,7 +118,7 @@ npm run dev
 - The project includes all necessary configuration files (`tsconfig.json`, `.eslintrc.json`, `next-env.d.ts`)
 - Check that all dependencies are properly installed in `node_modules`
 
-### 4. **Initial Data Processing**
+### 5. **Initial Data Processing**
 ```bash
 # Process and vectorize PDF file via API
 curl -X POST "http://localhost:8000/api/upload" \

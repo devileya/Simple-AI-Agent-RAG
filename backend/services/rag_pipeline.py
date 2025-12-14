@@ -1,8 +1,8 @@
 from typing import List, Dict, Any, Tuple, Optional
 import time
 from langchain.schema import Document
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.prompts import ChatPromptTemplate
+from langchain_community.llms import Ollama
+from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from services.vector_store import VectorStoreService
@@ -18,19 +18,18 @@ class RAGPipeline:
         # Initialize vector store service
         self.vector_store = vector_store_service or VectorStoreService()
         
-        # Initialize LLM
-        self.llm = ChatGoogleGenerativeAI(
+        # Initialize LLM with Ollama (local, free)
+        self.llm = Ollama(
             model=settings.llm_model,
             temperature=settings.llm_temperature,
-            max_output_tokens=settings.max_tokens,
-            google_api_key=settings.google_api_key
+            base_url=settings.ollama_base_url
         )
 
         # Store conversation memories per session
         self.session_memories: Dict[str, ConversationBufferMemory] = {}
         
         # Initialize prompt template for QA
-        self.qa_prompt_template = ChatPromptTemplate.from_template(
+        self.qa_prompt_template = PromptTemplate.from_template(
             """You are a helpful financial analyst assistant. 
             Answer the following question based ONLY on the provided context from a financial statement.
             If you cannot find the answer in the context, give the similar information.
