@@ -15,11 +15,11 @@ class Settings(BaseSettings):
     pdf_upload_path: str = os.getenv("PDF_UPLOAD_PATH", "../data")
     
     # Embedding model configuration
-    embedding_model: str = os.getenv("EMBEDDING_MODEL", "text-embedding-ada-002")
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "models/text-embedding-004")
     
     # LLM configuration
-    llm_model: str = os.getenv("LLM_MODEL", "gpt-3.5-turbo")
-    llm_temperature: float = float(os.getenv("LLM_TEMPERATURE", "0.8"))
+    llm_model: str = os.getenv("LLM_MODEL", "gemini-2.5-flash")
+    llm_temperature: float = float(os.getenv("LLM_TEMPERATURE", "0.1"))
     max_tokens: int = int(os.getenv("MAX_TOKENS", "1000"))
     
     # Chunking configuration
