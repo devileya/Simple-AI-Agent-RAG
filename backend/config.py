@@ -7,6 +7,10 @@ class Settings(BaseSettings):
     # Google API configuration
     google_api_key: str = os.getenv("GOOGLE_API_KEY", "")
     
+    # DeepSeek API configuration
+    deepseek_api_key: str = os.getenv("DEEPSEEK_API_KEY", "")
+    deepseek_base_url: str = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+    
     # Vector database configuration
     vector_db_path: str = os.getenv("VECTOR_DB_PATH", "./vector_store")
     vector_db_type: str = os.getenv("VECTOR_DB_TYPE", "chromadb")
@@ -15,7 +19,7 @@ class Settings(BaseSettings):
     pdf_upload_path: str = os.getenv("PDF_UPLOAD_PATH", "../data")
     
     # Embedding model configuration
-    embedding_model: str = os.getenv("EMBEDDING_MODEL", "models/text-embedding-004")
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "models/gemini-embedding-001")
     
     # LLM configuration
     llm_model: str = os.getenv("LLM_MODEL", "gemini-2.5-flash")
